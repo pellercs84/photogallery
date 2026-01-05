@@ -12,5 +12,8 @@
     },
     "devDependencies": {
         "@azure/functions": "^4.0.0"
+    },
+    "engines": {
+        "node": ">=20.0.0"
     }
 }
