@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
 
         // Create BlobServiceClient
         const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
-        const containerClient = blobServiceClient.getContainerClient('media');
+        const containerClient = blobServiceClient.getContainerClient('pellergallery');
 
         // Check if container exists
         const exists = await containerClient.exists();

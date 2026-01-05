@@ -149,7 +149,7 @@ Expand-Archive AzCopy.zip
 
 # Generate SAS
 $sas = az storage container generate-sas `
-  --account-name yourname2024gallery `
+  --account-name saphotogallery `
   --name media `
   --permissions rwl `
   --expiry (Get-Date).AddHours(2).ToString("yyyy-MM-ddTHH:mm:ssZ") `

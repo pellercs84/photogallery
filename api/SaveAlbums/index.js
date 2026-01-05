@@ -34,7 +34,7 @@ module.exports = async function (context, req) {
         const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
         // Use 'media' container for metadata
-        const containerClient = blobServiceClient.getContainerClient('media');
+        const containerClient = blobServiceClient.getContainerClient('pellergallery');
 
         // Ensure container exists
         await containerClient.createIfNotExists();

@@ -42,13 +42,13 @@ module.exports = async function (context, req) {
 
         // Generate SAS token for container
         const sasToken = generateBlobSASQueryParameters({
-            containerName: 'media',
+            containerName: 'pellergallery',
             permissions: permissions,
             expiresOn: expiryTime
         }, sharedKeyCredential).toString();
 
         // Construct SAS URL
-        const sasUrl = `https://${accountName}.blob.core.windows.net/media?${sasToken}`;
+        const sasUrl = `https://${accountName}.blob.core.windows.net/pellergallery?${sasToken}`;
 
         context.res = {
             status: 200,
