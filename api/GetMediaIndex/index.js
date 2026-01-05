@@ -94,7 +94,7 @@ module.exports = async function (context, req) {
         context.log.error('Error in GetMediaIndex:', error);
 
         context.res = {
-            status: 500,
+            status: 200, // Return 200 even on error to see the body in simple HTTP clients
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
