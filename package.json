@@ -5,7 +5,7 @@
     "main": "index.html",
     "scripts": {
         "start": "swa start . --api-location api",
-        "build": "echo 'No build step required'",
+        "build": "mkdir -p dist && cp *.html dist/ && cp -r css js dist/ && cp staticwebapp.config.json dist/",
         "deploy": "swa deploy"
     },
     "keywords": [
