@@ -112,7 +112,7 @@ az staticwebapp appsettings set `
   --resource-group rg-photogallery `
   --setting-names `
     AZURE_STORAGE_CONNECTION_STRING="f"`
-    GALLERY_PASSWORD="family2024"
+    GALLERY_PASSWORD=""
 
 # Deploy
 swa deploy `
