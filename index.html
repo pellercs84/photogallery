@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Photo Gallery</title>
+
+    <!-- lightGallery CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lightgallery-bundle.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">📸 Family Gallery</h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-view="all">All Media</button>
+                    <button class="nav-btn" data-view="albums">Albums</button>
+                    <button class="nav-btn" data-view="years">Years</button>
+                    <button class="btn-logout" onclick="logout()">Logout</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-left">
+                    <div id="breadcrumb" class="breadcrumb">
+                        <span>All Media</span>
+                    </div>
+                </div>
+                <div class="filter-right">
+                    <button id="btnCreateAlbum" class="btn btn-primary">
+                        <span>+ Create Album</span>
+                    </button>
+                    <button id="btnRefresh" class="btn btn-secondary" onclick="refreshGallery()">
+                        <span>🔄 Refresh</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- View: All Media -->
+            <div id="viewAll" class="view-section active">
+                <div id="galleryGrid" class="gallery-grid"></div>
+                <div id="loadingSpinner" class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading media...</p>
+                </div>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📷</div>
+                    <h3>No media found</h3>
+                    <p>Upload photos and videos to your Azure Blob Storage to get started.</p>
+                </div>
+            </div>
+
+            <!-- View: Albums -->
+            <div id="viewAlbums" class="view-section">
+                <div id="albumsList" class="albums-list"></div>
+                <div id="albumEmptyState" class="empty-state">
+                    <div class="empty-icon">📁</div>
+                    <h3>No albums yet</h3>
+                    <p>Create your first album to organize your photos and videos.</p>
+                </div>
+            </div>
+
+            <!-- View: Years -->
+            <div id="viewYears" class="view-section">
+                <div id="yearsList" class="years-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Album Modal -->
+    <div id="modalCreateAlbum" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Album</h2>
+                <button class="modal-close" onclick="closeCreateAlbumModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="albumName">Album Name</label>
+                    <input type="text" id="albumName" placeholder="e.g., Summer Vacation 2024" />
+                </div>
+                <div class="form-group">
+                    <label>Select Photos/Videos</label>
+                    <div id="mediaSelection" class="media-selection-grid"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeCreateAlbumModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAlbum()">Create Album</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Album View Modal -->
+    <div id="modalViewAlbum" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="albumTitle"></h2>
+                <button class="modal-close" onclick="closeViewAlbumModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="albumGalleryGrid" class="gallery-grid"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="deleteCurrentAlbum()">Delete Album</button>
+                <button class="btn btn-secondary" onclick="closeViewAlbumModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- lightGallery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/video/lg-video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/fullscreen/lg-fullscreen.min.js"></script>
+
+    <!-- App JS -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

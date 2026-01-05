@@ -1,0 +1,9 @@
+﻿node_modules/
+.env
+api/local.settings.json
+.DS_Store
+*.log
+.azure/
+dist/
+.vscode/
+swa-cli.config.json
