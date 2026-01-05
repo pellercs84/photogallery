@@ -91,7 +91,6 @@ Create `api/local.settings.json`:
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AZURE_STORAGE_CONNECTION_STRING": "PASTE_YOUR_CONNECTION_STRING_HERE",
     "GALLERY_PASSWORD": "family2024"
-    "DEPLOYMENT_TOKEN": "fbbada0d07d236b0cf5091181d9b9e0963ae707ba17f769e2cda6a7c106bfd5102-e8f0f403-4207-4877-8a70-e26a3c63256300321170fc215d03"
   }
 }
 ```
@@ -112,14 +111,14 @@ az staticwebapp appsettings set `
   --name PhotoGallery `
   --resource-group rg-photogallery `
   --setting-names `
-    AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=saphotogallery;AccountKey=MagNxafb1aapGsyrnkt1g0RckagV7lNrZd7Q9G17n0TGUNvcnrChd/HSrUqtVYjd1pkFDp55nmEb+ASt/rR9oQ==;BlobEndpoint=https://saphotogallery.blob.core.windows.net/;FileEndpoint=https://saphotogallery.file.core.windows.net/;QueueEndpoint=https://saphotogallery.queue.core.windows.net/;TableEndpoint=https://saphotogallery.table.core.windows.net/" `
+    AZURE_STORAGE_CONNECTION_STRING="f"`
     GALLERY_PASSWORD="family2024"
 
 # Deploy
 swa deploy `
   --app-location . `
   --api-location api `
-  --deployment-token "fbbada0d07d236b0cf5091181d9b9e0963ae707ba17f769e2cda6a7c106bfd5102-e8f0f403-4207-4877-8a70-e26a3c63256300321170fc215d03"
+  --deployment-token xyz
 ```
 
 ### 7. Get Your URL
