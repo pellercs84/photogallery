@@ -47,8 +47,8 @@ module.exports = async function (context, req) {
             const blobName = blob.name;
             const extension = blobName.substring(blobName.lastIndexOf('.')).toLowerCase();
 
-            // Skip non-media files
-            if (!imageExtensions.includes(extension) && !videoExtensions.includes(extension)) {
+            // Skip non-media files and thumbnails folder
+            if ((!imageExtensions.includes(extension) && !videoExtensions.includes(extension)) || blobName.startsWith('thumbnails/')) {
                 continue;
             }
 
@@ -71,6 +71,7 @@ module.exports = async function (context, req) {
                 id: blobName,
                 name: blobName.substring(blobName.lastIndexOf('/') + 1),
                 url: url,
+                thumbnailUrl: `/api/GetThumbnail?file=${encodeURIComponent(blobName)}`,
                 type: type,
                 year: year,
                 size: blob.properties.contentLength,

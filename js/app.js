@@ -109,16 +109,18 @@ function renderGallery(mediaItems) {
         if (item.type === 'video') {
             itemDiv.setAttribute('data-video', `{"source": [{"src":"${item.url}", "type":"video/mp4"}], "attributes": {"preload": false, "controls": true}}`);
 
+            // Use thumbnail for video preview instead of video tag
             itemDiv.innerHTML = `
-                <video src="${item.url}" preload="metadata"></video>
+                <img src="${item.thumbnailUrl}" alt="${item.name}" loading="lazy" />
                 <div class="video-badge">▶ Video</div>
                 <div class="gallery-item-overlay">
                     <div class="gallery-item-title">${item.name}</div>
                 </div>
             `;
         } else {
+            // Use thumbnail for image preview
             itemDiv.innerHTML = `
-                <img src="${item.url}" alt="${item.name}" loading="lazy" />
+                <img src="${item.thumbnailUrl}" alt="${item.name}" loading="lazy" />
                 <div class="gallery-item-overlay">
                     <div class="gallery-item-title">${item.name}</div>
                 </div>
@@ -227,7 +229,7 @@ function renderAlbums() {
 
         const previewHtml = previewImages.length > 0
             ? `<div class="album-preview">
-                ${previewImages.map(m => `<img src="${m.url}" alt="${m.name}" />`).join('')}
+                ${previewImages.map(m => `<img src="${m.thumbnailUrl}" alt="${m.name}" />`).join('')}
                </div>`
             : '';
 
@@ -333,11 +335,11 @@ function renderAlbumGallery(mediaItems, container) {
             itemDiv.setAttribute('data-video', `{"source": [{"src":"${item.url}", "type":"video/mp4"}], "attributes": {"preload": false, "controls": true}}`);
 
             itemDiv.innerHTML = `
-                <video src="${item.url}" preload="metadata"></video>
+                <img src="${item.thumbnailUrl}" alt="${item.name}" loading="lazy" />
                 <div class="video-badge">▶ Video</div>
             `;
         } else {
-            itemDiv.innerHTML = `<img src="${item.url}" alt="${item.name}" loading="lazy" />`;
+            itemDiv.innerHTML = `<img src="${item.thumbnailUrl}" alt="${item.name}" loading="lazy" />`;
         }
 
         container.appendChild(itemDiv);
@@ -401,12 +403,12 @@ function openCreateAlbumModal() {
 
         if (item.type === 'video') {
             itemDiv.innerHTML = `
-                <video src="${item.url}" preload="metadata"></video>
+                <img src="${item.thumbnailUrl}" alt="${item.name}" />
                 <div class="media-select-checkbox">✓</div>
             `;
         } else {
             itemDiv.innerHTML = `
-                <img src="${item.url}" alt="${item.name}" />
+                <img src="${item.thumbnailUrl}" alt="${item.name}" />
                 <div class="media-select-checkbox">✓</div>
             `;
         }
