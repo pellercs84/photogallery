@@ -253,7 +253,7 @@ az staticwebapp appsettings set \
   --setting-names GALLERY_PASSWORD="new-password"
 ```
 
-Also update in `js/config.js` for client-side verification (or fetch from API).
+For local development, update `api/local.settings.json`.
 
 ### Supported Media Formats
 
@@ -300,7 +300,7 @@ Also update in `js/config.js` for client-side verification (or fetch from API).
 
 ## Security Notes
 
-⚠️ **Important**: This implementation uses basic JavaScript password protection, which is suitable for lightweight security but not for highly sensitive content. The password can potentially be found by inspecting the code or network requests.
+⚠️ **Important**: This implementation uses basic token-based authentication. While the password is no longer exposed in the source code, the authentication token is visible in network requests.
 
 For enhanced security:
 - Upgrade to Azure Static Web Apps Standard SKU and use built-in password protection

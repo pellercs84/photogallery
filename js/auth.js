@@ -7,14 +7,7 @@
  */
 async function verifyPassword(password) {
     try {
-        // Option 1: Client-side verification (less secure, but free tier compatible)
-        if (CONFIG.GALLERY_PASSWORD === password) {
-            return true;
-        }
-
-        // Option 2: Server-side verification (more secure)
-        // Uncomment if you implement server-side password validation
-        /*
+        // Server-side verification (secure)
         const response = await fetch('/api/VerifyPassword', {
             method: 'POST',
             headers: {
@@ -22,12 +15,11 @@ async function verifyPassword(password) {
             },
             body: JSON.stringify({ password }),
         });
-        
+
         if (response.ok) {
             const data = await response.json();
             return data.valid === true;
         }
-        */
 
         return false;
     } catch (error) {
@@ -49,14 +41,9 @@ function isAuthenticated() {
         return false;
     }
 
-    // Verify the stored token matches the expected password
-    try {
-        const decodedPassword = atob(token);
-        return decodedPassword === CONFIG.GALLERY_PASSWORD;
-    } catch (error) {
-        console.error('Error decoding auth token:', error);
-        return false;
-    }
+    // We can't verify the token client-side anymore since we removed the password from config
+    // The API endpoints should validate the token
+    return true;
 }
 
 /**

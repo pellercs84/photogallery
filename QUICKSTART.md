@@ -166,9 +166,8 @@ $sas = az storage container generate-sas `
 **Password:** `family2024`
 
 **To change:**
-1. Edit `js/config.js` → line 7
-2. Update Azure setting: `az staticwebapp appsettings set ...`
-3. Redeploy
+1. **Local:** Edit `api/local.settings.json`
+2. **Production:** Update Azure setting: `az staticwebapp appsettings set ...`
 
 ## Troubleshooting
 
