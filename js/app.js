@@ -109,12 +109,12 @@ function renderGallery(mediaItems) {
         if (item.type === 'video') {
             itemDiv.setAttribute('data-video', `{"source": [{"src":"${item.url}", "type":"video/mp4"}], "attributes": {"preload": false, "controls": true}}`);
 
-            // Use thumbnail for video preview instead of video tag
             itemDiv.innerHTML = `
                 <img src="${item.thumbnailUrl}" alt="${item.name}" loading="lazy" />
                 <div class="video-badge">▶ Video</div>
                 <div class="gallery-item-overlay">
                     <div class="gallery-item-title">${item.name}</div>
+                    <button class="btn-delete-icon" onclick="event.stopPropagation(); deleteMedia('${item.id}')" title="Delete">🗑️</button>
                 </div>
             `;
         } else {
@@ -123,6 +123,7 @@ function renderGallery(mediaItems) {
                 <img src="${item.thumbnailUrl}" alt="${item.name}" loading="lazy" />
                 <div class="gallery-item-overlay">
                     <div class="gallery-item-title">${item.name}</div>
+                    <button class="btn-delete-icon" onclick="event.stopPropagation(); deleteMedia('${item.id}')" title="Delete">🗑️</button>
                 </div>
             `;
         }
@@ -568,3 +569,58 @@ function getCachedMedia() {
 function clearMediaCache() {
     localStorage.removeItem(CONFIG.STORAGE_MEDIA_CACHE_KEY);
 }
+
+/**
+ * Delete media item
+ */
+async function deleteMedia(mediaId) {
+    if (!confirm('Are you sure you want to PERMANENTLY delete this item?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(\\/DeleteMedia?id=\\, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': \Bearer \\
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete item');
+        }
+
+        // Remove from local array
+        allMedia = allMedia.filter(m => m.id !== mediaId);
+        
+        // Remove from albums
+        albums.forEach(album => {
+            if (album.mediaIds.includes(mediaId)) {
+                album.mediaIds = album.mediaIds.filter(id => id !== mediaId);
+            }
+        });
+        saveAlbumsToStorage();
+
+        // Update cache
+        cacheMedia(allMedia);
+
+        // Re-render
+        if (currentView === 'all' || (currentView === 'years' && currentYear)) {
+             if (currentView === 'years') filterByYear(currentYear);
+             else renderGallery(allMedia);
+        } else if (currentView === 'albums' && currentAlbum) {
+             const albumMedia = currentAlbum.mediaIds
+                .map(id => allMedia.find(m => m.id === id))
+                .filter(m => m);
+            const container = document.getElementById('albumGalleryGrid');
+            renderAlbumGallery(albumMedia, container);
+        }
+
+    } catch (error) {
+        console.error('Error deleting media:', error);
+        alert('Failed to delete media. Please try again.');
+    }
+}
+// Export to window
+window.deleteMedia = deleteMedia;
+

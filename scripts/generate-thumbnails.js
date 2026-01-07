@@ -45,10 +45,18 @@ async function processDirectory(dir, relativePath = '') {
             const fullPath = path.join(dir, entry);
             const relPath = path.join(relativePath, entry);
 
+            // Skip the output directory if it sits inside the source directory
+            // We resolve absolute paths to be sure
+            if (path.resolve(fullPath).toLowerCase() === path.resolve(CONFIG.outputDir).toLowerCase()) {
+                console.log(`Skipping output directory: ${relPath}`);
+                continue;
+            }
+
             try {
                 const stats = await stat(fullPath);
 
                 if (stats.isDirectory()) {
+                    // Create corresponding subdirectory in output
                     const outSubDir = path.join(CONFIG.outputDir, relPath);
                     if (!fs.existsSync(outSubDir)) {
                         await mkdir(outSubDir, { recursive: true });
@@ -74,9 +82,12 @@ async function processFile(filePath, relativePath) {
     if (!isImage && !isVideo) return;
 
     // Output filename (always .jpg for thumbnails)
-    const outFileName = isVideo
-        ? relativePath.replace(ext, '.jpg')
-        : relativePath;
+    let outFileName = relativePath;
+    if (isVideo) {
+        // Replace extension with .jpg
+        const parsed = path.parse(relativePath);
+        outFileName = path.join(parsed.dir, parsed.name + '.jpg');
+    }
 
     const outPath = path.join(CONFIG.outputDir, outFileName);
 
