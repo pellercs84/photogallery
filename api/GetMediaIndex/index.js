@@ -66,12 +66,23 @@ module.exports = async function (context, req) {
             const blobClient = containerClient.getBlobClient(blobName);
             const url = blobClient.url;
 
+            // Construct thumbnail URL (assumes thumbnail exists in 'thumbnails/' folder)
+            // Example: 2024/video.mp4 -> thumbnails/2024/video.jpg
+            let thumbName = blobName;
+            if (type === 'video') {
+                const ext = thumbName.substring(thumbName.lastIndexOf('.'));
+                thumbName = thumbName.replace(ext, '.jpg');
+            }
+            const thumbPath = `thumbnails/${thumbName}`;
+            const thumbClient = containerClient.getBlobClient(thumbPath);
+            const thumbnailUrl = thumbClient.url;
+
             // Create media object
             media.push({
                 id: blobName,
                 name: blobName.substring(blobName.lastIndexOf('/') + 1),
                 url: url,
-                thumbnailUrl: `/api/GetThumbnail?file=${encodeURIComponent(blobName)}`,
+                thumbnailUrl: thumbnailUrl,
                 type: type,
                 year: year,
                 size: blob.properties.contentLength,
